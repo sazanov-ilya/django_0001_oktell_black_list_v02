@@ -1,0 +1,38 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+
+    <a class="navbar-brand" href="{% url 'about' %}">
+        <img src="{% static 'black_list/images/logo.png' %}" alt="лого" width="50" height="50">
+    </a>
+
+    <!--кнопка-гамбургер для мобильной версии с размера "lg"-->
+    <button type="button" class="navbar-toggler"  data-bs-toggle="collapse"
+    data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--меню-->
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% for m in menu %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url m.url_name %}">{{m.title}}</a>
+            </li>
+
+        {% endfor %}
+        </ul>
+
+        <!--поле поиска-->
+        <!--
+        <form action="" class="d-flex">
+            <input type="search" class="form-control mr-2" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success">Search</button>
+        </form>
+        -->
+
+
+    </div>
+
+</nav>

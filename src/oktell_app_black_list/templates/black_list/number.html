@@ -1,0 +1,54 @@
+{% extends 'black_list/base_paginator.html' %}
+
+{% block head %}
+    <title>{{ title }}</title>
+{% endblock head %}
+
+{% block content %}
+
+        <h3>{{ title }}</h3>
+		<hr>
+		
+		<table class="table table-light">
+			<thead class="table-secondary">
+				<tr>
+					<th scope="col">Наименование</th>
+					<th scope="col">Значение</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">ID:</th>
+					<td>{{ number.id }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Дата добавления:</th>
+					<td>{{ number.date_add }}</td>
+					
+				</tr>
+				<tr>
+					<th scope="row">Тип ЧС:</th>
+					<td colspan="2">{{ number.type }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Номер телефона:</th>
+					<td colspan="2">{{ number.number }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Slug:</th>
+					<td colspan="2">{{ number.slug }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Комментарий:</th>
+					<td colspan="2">{{ number.comment }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Добавил:</th>
+					<td colspan="2">{{ number.user }}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<a href="{% url 'update_number' number.slug %}">Изменить</a> | <a href="{% url 'delete_number' number.slug %}">Удалить</a>
+
+{% endblock content %}

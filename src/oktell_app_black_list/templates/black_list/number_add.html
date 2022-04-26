@@ -1,0 +1,30 @@
+{% extends 'black_list/base_paginator.html' %}
+
+{% block head %}
+    <title>{{ title }}</title>
+{% endblock head %}
+
+{% block content %}
+
+        <h3>{{ title }}</h3>
+		<form action="{% url 'add_number' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+        <!--
+        <div class="form-error">
+            {{ form.non_field_errors }}
+        </div>
+        -->
+		
+
+        {{ form.as_p }}
+
+
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <input class="btn btn-secondary" type="submit" value="Сохранить">
+            </div>
+
+        </form>
+
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends 'black_list/base_paginator.html' %}
+{% load static %}
+{% load black_list_tags %}
+
+{% block head %}
+    <title>{{ title }}</title>
+{% endblock head %}
+
+{% block content %}
+
+<!-- Меню локальной странички -->
+<!-- Через включающий тег -->
+
+<!-- Меню статусов (вынксено в главное меню) -->
+<!-- templatetags/black_list_tags.py -> show_types/list_statuses.html -->
+{#% show_types user 'id' type_selected %#}
+<!-- Кнопка с выпадающим списком статусов -->
+{#% show_types user=user sort='name' type_selected=type_selected %#}
+<!-- КОНЕЦ-Меню статусов -->
+
+
+<!-- Форма поиска -->
+	<!--
+	<form action="{% url 'show_numbers_by_search_view' %}" method="get" class="d-flex">	
+		<input id="number_id"  name="number" value="" type="search" class="form-control mr-2" placeholder="Введите номер для поиска" aria-label="Search">
+        <button class="btn btn-outline-success">Найти</button>
+    </form>        
+	-->
+	<!-- templatetags/order_tags.py/form_search_by_number_old_20220416/form_search.html -->
+    {#% form_search_by_number_old_20220416 link='show_numbers_by_search_view' btn_title='Найти' %#}
+<!--КОНЕЦ-Форма поиска-->
+
+
+<!-- Контент локальной странички -->
+<h3>{{ title }}</h3>
+<hr>
+<table class="table table-light table-hover">
+	<thead class="table-secondary">
+		<tr>
+			<th scope="col">Номер телефона</th>
+			<th scope="col">Тип Чс</th>
+			<th scope="col"></th>
+			<th scope="col"></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for number in numbers %}
+		<tr>
+			<td>
+				<a href="{{ number.get_absolute_url }}">
+                {{ number.number }}
+				</a>
+			</td>
+			<td>{{ number.type.name }}</td>
+			<td>
+				<a href="{% url 'update_number' number.slug %}">Редактировать</a>
+			</td>
+			<td>
+				<a href="{% url 'delete_number' number.slug %}">Удалить</a>
+			</td>
+		</tr>
+		{% endfor %}
+    
+	
+	</tbody>
+</table>
+<!-- КОНЕЦ-Контент локальной странички -->
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+<!--types получаем из black_list_tags.py/show_types-->
+{% for type in types %}
+    {% if type.count > 0 %}
+        {% if type.id == type_selected %}
+            <li>{{ type.name }} ({{ type.count }})</li>
+        {% else %}
+            <li>
+                <a href="{{ type.get_absolute_url }}">{{ type.name }} ({{ type.count }})</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}

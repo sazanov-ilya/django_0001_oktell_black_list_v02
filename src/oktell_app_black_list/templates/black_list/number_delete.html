@@ -1,0 +1,18 @@
+{% extends 'black_list/base_paginator.html' %}
+
+{% block head %}
+    <title>{{ title }}</title>
+{% endblock head %}
+ 
+{% block content %}
+    <h3>{{ title }}</h3>
+    <form action="" method="post">{% csrf_token %}
+	
+      <p>Вы действительно хотите удалить номомер "{{ number.number }}"?</p>
+	  
+	  <div class="d-grid gap-2 col-6 mx-auto">
+		<input class="btn btn-secondary" type="submit" value="Удалить">
+      </div>
+	  
+    </form>
+{% endblock content %}

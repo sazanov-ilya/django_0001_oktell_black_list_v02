@@ -1,0 +1,35 @@
+<!-- types получаем из black_list_tags.py/show_types -->
+<!-- https://getbootstrap.com/docs/5.0/components/dropdowns/ -->
+<div class="dropdown">
+
+  <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    Список номеров
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+  
+    <!-- Пункт "Все типы" -->
+	{% if type_selected == 0 %}
+		<li>Все типы</li>
+	{% else %}
+		<li>
+			<a class="dropdown-item" href="{% url 'numbers' %}">Все типы</a>
+		</li>
+	{% endif %}
+	
+	<!-- Вывод списка всех типов -->
+	{% for type in types %}
+		{% if type.count > 0 %}
+			{% if type.id == type_selected %}
+				<li>{{ type.name }} ({{ type.count }})</li>
+			{% else %}
+				<li>
+					<a class="dropdown-item" href="{{ type.get_absolute_url }}">{{ type.name }} ({{ type.count }})</a>
+				</li>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+	
+  </ul>
+</div>
+

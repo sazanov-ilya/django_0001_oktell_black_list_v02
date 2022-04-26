@@ -1,0 +1,67 @@
+{% extends 'black_list/base_paginator.html' %}
+{% load static %}
+{% load black_list_tags %}
+
+{% block head %}
+    <title>{{ title }}</title>
+{% endblock head %}
+
+{% block content %}
+<!--Меню локальной странички-->
+<!--Через включающий тег-->
+
+<!--Меню статусов-->
+<ul>
+    {% if type_selected == 0 %}
+        <li>Все типы</li>
+    {% else %}
+        <li>
+            <a href="{% url 'numbers' %}">Все типы</a>
+        </li>
+    {% endif %}
+
+    <!--templatetags/black_list_tags.py -> show_types/list_statuses.html-->
+    {% show_types 'id' type_selected %}
+</ul>
+<!--КОНЕЦ-Меню статусов-->
+
+<!--Контент локальной странички-->
+<h2>{{ title }}</h2>
+
+<ul>
+    <hr>
+    {% for number in numbers %}
+    <li>
+		<p>
+            <b>ID: </b>{{ number.id }}
+        </p>
+		<p> 
+            <b>Дата добавления: </b>{{ number.date_add|date:"d.m.Y H:i:s" }}
+        </p>
+		<p>
+            <b>BlackListType: </b>{{ number.type.name }}
+        </p>
+		<p>			
+			<b>Номер телефона: </b>
+            <a href="{{ number.get_absolute_url }}">
+                {{ number.number }}
+            </a>
+        </p>
+		<p>
+            <b>Slug: </b>{{ number.slug }}
+        </p>
+		<p>
+            <b>Комментарий: </b>{{ number.comment }}
+        </p>
+		<p>
+            <b>Пользователь: </b>{{ number.user }}
+        </p>
+        <hr>
+    </li>
+
+    {% endfor %}
+    <hr>
+</ul>
+<!--КОНЕЦ-контент локальной странички-->
+
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% load static %}
+<!--Подгружаем пользовательские теги-->
+{% load black_list_tags %}
+{% load accounts_tags %} 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+<div class="container-fluid">
+  
+	<!--Картинка логотипа-->
+    <a class="navbar-brand" href="{% url 'about' %}">
+        <img src="{% static 'black_list/images/logo.png' %}" alt="лого" width="50" height="50">
+    </a>
+    
+	<!--Кнопка-гамбургер для мобильной версии с размера "lg"-->
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+		
+	<!--Меню-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		
+		<!--Перебираем пункты списка меню-->
+		{% for m in menu %}
+			<!--Проверяем тип пункта меню-->
+			<!--Если это выпадающий список типов ЧС, то формируем соотыетствующий список-->
+			{% if m.type == 'dropdown_types' %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="{% url 'numbers' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					{{m.title}}
+				</a>
+				
+				<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<!--Пункт "Все типы"-->
+				{% if type_selected == 0 %}
+					<li>Все типы</li>
+				{% else %}
+					<li>
+						<a class="dropdown-item" href="{% url 'numbers' %}">Все типы</a>
+					</li>
+				{% endif %}
+				<!--В цилле добавляем все типы ЧС-->
+				{% for type in types %}
+					{% if type.count > 0 %}
+						{% if type.id == type_selected %}
+							<li>{{ type.name }} ({{ type.count }})</li>
+						{% else %}
+							<li>
+								<a class="dropdown-item" href="{{ type.get_absolute_url }}">{{ type.name }} ({{ type.count }})</a>
+							</li>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+				</ul>
+			</li>			
+			{% else %}
+			<!--Выводим простой пункт меню-->
+			<li class="nav-item">
+				<a class="nav-link" href="{% url m.url_name %}">{{m.title}}</a>
+			</li>			
+			{% endif %}
+			<!--КОНЕЦ-Проверяем тип пункта меню-->			
+		{% endfor %}
+		<!--КОНЕЦ-Перебираем пункты списка меню-->
+		</ul>
+
+
+		<!--
+			Форма для поиска
+			Контейнер для формы поиска
+		-->
+		<div>
+			<!--oktell_app_black_list/templatetags/order_tags.py -> form_search_by_number-->
+			{% form_search_by_number link='show_numbers_by_search_view' btn_title='Найти' %}
+		</div>
+
+
+		<hr>
+	 
+	 
+		<!--
+			Выпадающий список меню-пользователя
+			Контейнер для авторизации/регистрации (добавлен отступ слева от формы для поиска)
+		-->
+		<div class="ms-3">
+			<!--oktell_app_accounts/templatetags/accounts_tags.py -> show_menu_accounts-->
+			{% show_menu_accounts user=user %}
+		</div>
+    </div>	
+</div>
+  
+</nav>
